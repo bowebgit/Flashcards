@@ -18,7 +18,14 @@
  */
 package domainapp.modules.simple.dom.impl;
 
+import javax.inject.Inject;
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Unique;
+import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
 
 import com.google.common.collect.ComparisonChain;
@@ -42,33 +49,34 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
 
 import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE, schema = "simple")
-@javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="id")
-@javax.jdo.annotations.Version(strategy= VersionStrategy.DATE_TIME, column="version")
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
+@PersistenceCapable(identityType=IdentityType.DATASTORE, schema = "simple")
+@DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="id")
+@Version(strategy= VersionStrategy.DATE_TIME, column="version")
+@Unique(name="SimpleObject_name_UNQ", members = {"name"})
 @DomainObject(auditing = Auditing.ENABLED)
 @DomainObjectLayout()  // causes UI events to be triggered
-@lombok.Getter @lombok.Setter
-@lombok.RequiredArgsConstructor
+@Getter @Setter
+@RequiredArgsConstructor
 public class SimpleObject implements Comparable<SimpleObject> {
 
-    @javax.jdo.annotations.Column(allowsNull = "false", length = 40)
-    @lombok.NonNull
+    @Column(allowsNull = "false", length = 40)
+    @NonNull
     @Property() // editing disabled by default, see isis.properties
     @Title(prepend = "Object: ")
     private String name;
 
-    @javax.jdo.annotations.Column(allowsNull = "true", length = 4000)
+    @Column(allowsNull = "true", length = 4000)
     @Property(editing = Editing.ENABLED)
     private String notes;
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT, command = CommandReification.ENABLED, publishing = Publishing.ENABLED, associateWith = "name")
-    public SimpleObject updateName(
-            @Parameter(maxLength = 40)
-            @ParameterLayout(named = "Name")
-            final String name) {
+    public SimpleObject updateName(@Parameter(maxLength = 40) @ParameterLayout(named = "Name") final String name) {
         setName(name);
         return this;
     }
@@ -106,19 +114,19 @@ public class SimpleObject implements Comparable<SimpleObject> {
 
 
     //region > injected services
-    @javax.inject.Inject
-    @javax.jdo.annotations.NotPersistent
-    @lombok.Getter(AccessLevel.NONE) @lombok.Setter(AccessLevel.NONE)
+    @Inject
+    @NotPersistent
+    @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE)
     RepositoryService repositoryService;
 
-    @javax.inject.Inject
-    @javax.jdo.annotations.NotPersistent
-    @lombok.Getter(AccessLevel.NONE) @lombok.Setter(AccessLevel.NONE)
+    @Inject
+    @NotPersistent
+    @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE)
     TitleService titleService;
 
-    @javax.inject.Inject
-    @javax.jdo.annotations.NotPersistent
-    @lombok.Getter(AccessLevel.NONE) @lombok.Setter(AccessLevel.NONE)
+    @Inject
+    @NotPersistent
+    @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE)
     MessageService messageService;
     //endregion
 

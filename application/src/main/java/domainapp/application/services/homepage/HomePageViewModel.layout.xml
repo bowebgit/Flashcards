@@ -37,6 +37,11 @@
                     <collection id="objects" defaultView="table"/>
                 </bs3:col>
             </bs3:row>
+            <bs3:row>
+                <bs3:col span="12">
+                    <collection id="subjects" defaultView="table"/>
+                </bs3:col>
+            </bs3:row>
         </bs3:col>
     </bs3:row>
     <bs3:row>

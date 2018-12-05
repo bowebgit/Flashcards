@@ -20,6 +20,8 @@ package domainapp.application.services.homepage;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Nature;
 import org.apache.isis.applib.services.i18n.TranslatableString;
@@ -40,7 +42,7 @@ public class HomePageViewModel {
     public List<SimpleObject> getObjects() {
         return simpleObjects.listAll();
     }
-
-    @javax.inject.Inject
+    
+    @Inject
     SimpleObjects simpleObjects;
 }

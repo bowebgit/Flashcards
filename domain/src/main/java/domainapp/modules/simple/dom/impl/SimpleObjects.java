@@ -37,15 +37,8 @@ import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
-@DomainService(
-        nature = NatureOfService.VIEW_MENU_ONLY,
-        objectType = "simple.SimpleObjectMenu",
-        repositoryFor = SimpleObject.class
-)
-@DomainServiceLayout(
-        named = "Simple Objects",
-        menuOrder = "10"
-)
+@DomainService(nature = NatureOfService.VIEW_MENU_ONLY, objectType = "simple.SimpleObjectMenu", repositoryFor = SimpleObject.class)
+@DomainServiceLayout(named = "Simple Objects", menuOrder = "10")
 public class SimpleObjects {
 
     @Action(semantics = SemanticsOf.SAFE)
@@ -59,26 +52,18 @@ public class SimpleObjects {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "2")
-    public List<SimpleObject> findByName(
-            @ParameterLayout(named="Name")
-            final String name
-    ) {
+    public List<SimpleObject> findByName(@ParameterLayout(named="Name") final String name) {
         TypesafeQuery<SimpleObject> q = isisJdoSupport.newTypesafeQuery(SimpleObject.class);
         final QSimpleObject cand = QSimpleObject.candidate();
-        q = q.filter(
-                cand.name.indexOf(q.stringParameter("name")).ne(-1)
-        );
-        return q.setParameter("name", name)
-                .executeList();
+        q = q.filter(cand.name.indexOf(q.stringParameter("name")).ne(-1));
+        return q.setParameter("name", name).executeList();
     }
 
     @Programmatic
     public SimpleObject findByNameExact(final String name) {
         TypesafeQuery<SimpleObject> q = isisJdoSupport.newTypesafeQuery(SimpleObject.class);
         final QSimpleObject cand = QSimpleObject.candidate();
-        q = q.filter(
-                cand.name.eq(q.stringParameter("name"))
-        );
+        q = q.filter(cand.name.eq(q.stringParameter("name")));
         return q.setParameter("name", name)
                 .executeUnique();
     }
