@@ -33,7 +33,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <isis-maven-plugin.appManifest>domainapp.application.manifest.DomainAppAppManifest</isis-maven-plugin.appManifest>
+        <isis-maven-plugin.appManifest>flashcard.application.manifest.DomainAppAppManifest</isis-maven-plugin.appManifest>
 
         <jetty-console-maven-plugin.backgroundImage>${basedir}/src/main/jettyconsole/isis-banner.png</jetty-console-maven-plugin.backgroundImage>
 
@@ -187,44 +187,21 @@
             </dependencies>
         </profile>
         <profile>
-            <id>jdbc-postgres</id>
-            <activation>
-                <property>
-                    <name>!skip.jdbc-postgres</name>
-                </property>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>9.1-901.jdbc4</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <!--
-        <profile>
             <id>jdbc-mssql</id>
             <activation>
                 <property>
                     <name>!skip.jdbc-mssql</name>
                 </property>
             </activation>
-
-            mvn install:install-file -Dfile=sqljdbc4.jar \
-                                     -DgroupId=com.microsoft.sqlserver \
-                                     -DartifactId=jdbc \
-                                     -Dversion=4.0 \
-                                     -Dpackaging=jar
-
             <dependencies>
                <dependency>
                    <groupId>com.microsoft.sqlserver</groupId>
-                   <artifactId>sqljdbc4</artifactId>
-                   <version>4.0</version>
+                   <artifactId>mssql-jdbc</artifactId>
+                   <version>6.1.0.jre8</version>
                </dependency>
             </dependencies>
         </profile>
-        -->
+       
     </profiles>
 
 </project>
