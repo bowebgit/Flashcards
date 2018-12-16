@@ -24,4 +24,13 @@ public class SubjectMenu {
 	public Subjects allSubjects() {
 		return subjects;
 	}
+	
+	@Action(semantics = SemanticsOf.SAFE)
+	@ActionLayout(named = "New Subject")
+	@MemberOrder(sequence = "2")
+	public Subjects addSubjects() {
+		return subjects;
+	}
+	
+	
 }
