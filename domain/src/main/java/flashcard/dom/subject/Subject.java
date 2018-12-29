@@ -10,17 +10,31 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 
-@PersistenceCapable(identityType = IdentityType.DATASTORE, schema = "subject")
+import lombok.RequiredArgsConstructor;
+
+@PersistenceCapable(identityType = IdentityType.DATASTORE)
 @DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="id")
 @Version(strategy= VersionStrategy.DATE_TIME, column="version")
-@DomainObject(objectType = "Subject")
+@DomainObject(objectType = "simple.Subject")
+@RequiredArgsConstructor
 public class Subject implements Comparable<Subject> {
 
 	
+	
 	private String subjectName;
 	//private Set<String> strings = new TreeSet<>();
+	
+	public Subject(String subjectName) {
+		this.subjectName = subjectName;
+	}
+	
+	@Title
+	public String getTitle() {
+		return this.subjectName;
+	}
 	
 	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "false")
 	@Property(hidden = Where.NOWHERE)
@@ -33,6 +47,8 @@ public class Subject implements Comparable<Subject> {
 		this.subjectName = subjectName;
 	}
 
+	
+	
 	
 	@Override
 	public int compareTo(Subject otherSubject) {

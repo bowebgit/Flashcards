@@ -11,11 +11,11 @@ import com.google.common.collect.Sets;
 @DomainService(nature = NatureOfService.DOMAIN, repositoryFor = Subject.class)
 public class SubjectRepository {
 
-	@javax.inject.Inject
-	private RepositoryService repositoryService;
-
-	public SortedSet<Subject> finalAll()
-	{
-		return Sets.newTreeSet(repositoryService.allInstances(Subject.class));
-	}
+//	@javax.inject.Inject
+//	private RepositoryService repositoryService;
+//
+//	public SortedSet<Subject> finalAll()
+//	{
+//		return Sets.newTreeSet(repositoryService.allInstances(Subject.class));
+//	}
 }
