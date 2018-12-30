@@ -9,15 +9,9 @@
     </bs3:row>
     <bs3:row>
         <bs3:col span="8">
-            <c:fieldSet name="Subject">
-            	<c:action id="addSet" position="PANEL"/>
-                <c:property id="subjectName" namedEscaped="true"/>
+            <c:fieldSet name="Set">
+                <c:property id="setName" namedEscaped="true"/>
             </c:fieldSet>
-        </bs3:col>
-   	</bs3:row>
-   	<bs3:row>
-        <bs3:col span="8">
-        	<c:collection id="sets"/>
         </bs3:col>
    	</bs3:row>
 

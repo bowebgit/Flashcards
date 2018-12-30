@@ -17,15 +17,16 @@ import flashcard.dom.subject.Subjects;
 public class HomePageViewModel {
 
     @Inject Subjects subjects;
-    @Inject SimpleObjects simpleObjects;
+    //@Inject SimpleObjects simpleObjects;
 	
-    public TranslatableString title() {
-        return TranslatableString.tr("{num} objects", "num", getObjects().size());
+    public String title() {
+    	return "Flashcards";
+       // return TranslatableString.tr("{num} objects", "num", getObjects().size());
     }
 
-    public List<SimpleObject> getObjects() {
-        return simpleObjects.listAll();
-    }
+//    public List<SimpleObject> getObjects() {
+//        return simpleObjects.listAll();
+//    }
     
     public List<Subject> getSubjects() {
     	return subjects.listAll();

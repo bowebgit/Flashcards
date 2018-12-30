@@ -32,8 +32,9 @@ public class Subjects {
 
     
     @Action
+    @ActionLayout(named = "New Subject")
     @MemberOrder(sequence="2")
-    public Subject create(@ParameterLayout(named = "name") final String name) {
+    public Subject create(@ParameterLayout(named = "Name") final String name) {
     	return repositoryService.persist(new Subject(name));
     }
     

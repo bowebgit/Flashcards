@@ -32,6 +32,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -42,7 +43,7 @@ import org.apache.isis.applib.services.xactn.TransactionService;
 public class SimpleObjects {
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, hidden = Where.EVERYWHERE)
     @MemberOrder(sequence = "1")
     public List<SimpleObject> listAll() {
         return repositoryService.allInstances(SimpleObject.class);
@@ -50,7 +51,7 @@ public class SimpleObjects {
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, hidden=Where.EVERYWHERE)
     @MemberOrder(sequence = "2")
     public List<SimpleObject> findByName(@ParameterLayout(named="Name") final String name) {
         TypesafeQuery<SimpleObject> q = isisJdoSupport.newTypesafeQuery(SimpleObject.class);
@@ -71,6 +72,7 @@ public class SimpleObjects {
 
     public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjects> {}
     @Action(domainEvent = CreateDomainEvent.class)
+    @ActionLayout(hidden=Where.EVERYWHERE)
     @MemberOrder(sequence = "3")
     public SimpleObject create(
             @ParameterLayout(named="Name")
