@@ -17,7 +17,11 @@
     </bs3:row>
     <bs3:row>
         <bs3:col span="8" cssClass = "col-md-offset-2">
-            <collection id="sets" defaultView="table" />
+
+            <collection id="sets" defaultView="table">
+            	<action id="addSet"/>
+            </collection>
+    
         </bs3:col>
     </bs3:row>
     <bs3:row>

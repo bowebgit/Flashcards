@@ -1,6 +1,5 @@
 package flashcard.dom.set;
 
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -50,7 +49,7 @@ public class Set implements Comparable<Set> {
 	}
 	
 	@Title
-	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "false")
+	@Column(sqlType = "VARCHAR", length = 40, allowsNull = "false")
 	@Property(hidden = Where.NOWHERE)
 	@PropertyLayout(named = "Set Name")
 	@MemberOrder(sequence="1")
@@ -73,7 +72,7 @@ public class Set implements Comparable<Set> {
 		this.cards = cards;
 	}
 
-	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "true")
+	@Column(sqlType = "VARCHAR", length = 4000, allowsNull = "true")
 	@Property(hidden = Where.NOWHERE)
 	@PropertyLayout(named = "Description")
 	@MemberOrder(sequence="2")
