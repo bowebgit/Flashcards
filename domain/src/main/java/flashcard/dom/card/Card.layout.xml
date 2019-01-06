@@ -8,17 +8,15 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="8">
-            <c:fieldSet name="Subject">
-            	<c:action id="addSet" position="PANEL"/>
-                <c:property id="subjectName" namedEscaped="true"/>
+        <bs3:col span="6" cssClass = "col-md-offset-1">
+            <c:fieldSet name="Card">
+                <c:property id="name" namedEscaped="true"/>
+                <c:property id="function" />
+                <c:property id="definition" />
+                <c:property id="sentences" />
             </c:fieldSet>
         </bs3:col>
-   	</bs3:row>
-   	<bs3:row>
-        <bs3:col span="8">
-        	<c:collection id="sets"/>
-        </bs3:col>
+        
    	</bs3:row>
 
     <bs3:row>

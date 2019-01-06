@@ -17,18 +17,18 @@
 <!--             </mb3:section> -->
 <!--         </mb3:menu> -->
         <mb3:menu>
-            <mb3:named>Subjects</mb3:named>
+            <mb3:named>Flashcard Sets</mb3:named>
             <mb3:section>
-                <mb3:serviceAction objectType="simple.SubjectMenu" id="create">
-                    <cpt:named>Create Subject</cpt:named>
+                <mb3:serviceAction objectType="simple.SetsMenu" id="create">
+                    <cpt:named>Add New Set</cpt:named>
                 </mb3:serviceAction>
-                <mb3:serviceAction objectType="simple.SubjectMenu" id="listAll">
-                    <cpt:named>List Subjects</cpt:named>
+                <mb3:serviceAction objectType="simple.SetsMenu" id="listAll">
+                    <cpt:named>List All Sets</cpt:named>
                 </mb3:serviceAction>
             </mb3:section>
         </mb3:menu>
         <mb3:menu unreferencedActions="true">
-            <mb3:named>Subjects</mb3:named>
+            <mb3:named>Flashcard Sets</mb3:named>
         </mb3:menu>
     </mb3:primary>
     <mb3:secondary>

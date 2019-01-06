@@ -8,10 +8,17 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="8">
+        <bs3:col span="4" cssClass = "col-md-offset-1">
             <c:fieldSet name="Set">
-                <c:property id="setName" namedEscaped="true"/>
+            	<c:action id="deleteSet" position="PANEL"/>
+                <c:property id="name" namedEscaped="true"/>
+                <c:property id="description" namedEscaped="true"/>
             </c:fieldSet>
+        </bs3:col>
+        <bs3:col span="6">
+        	<c:collection id="cards">
+        		<c:action id="addCard" position="PANEL"/>
+        	</c:collection>
         </bs3:col>
    	</bs3:row>
 

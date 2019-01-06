@@ -1,4 +1,4 @@
-package flashcard.dom.subject;
+package flashcard.dom.set;
 
 import java.util.List;
 
@@ -17,25 +17,25 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 import flashcard.dom.simpleobj.SimpleObject;
 
-@DomainService(nature = NatureOfService.VIEW_MENU_ONLY, objectType = "simple.SubjectsMenu", repositoryFor = Subject.class)
+@DomainService(nature = NatureOfService.VIEW_MENU_ONLY, objectType = "simple.SetsMenu", repositoryFor = Set.class)
 @DomainObjectLayout
-public class Subjects {
+public class Sets {
 	
 	@Inject RepositoryService repositoryService;
 	
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<Subject> listAll() {
-        return repositoryService.allInstances(Subject.class);
+    public List<Set> listAll() {
+        return repositoryService.allInstances(Set.class);
     }
 
     
     @Action
-    @ActionLayout(named = "New Subject")
+    @ActionLayout(named = "New Set")
     @MemberOrder(sequence="2")
-    public Subject create(@ParameterLayout(named = "Name") final String name) {
-    	return repositoryService.persist(new Subject(name));
+    public Set create(@ParameterLayout(named = "Name") final String name) {
+    	return repositoryService.persist(new Set(name));
     }
     
 

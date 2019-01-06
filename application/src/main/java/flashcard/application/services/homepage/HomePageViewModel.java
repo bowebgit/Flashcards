@@ -4,19 +4,25 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.isis.applib.annotation.Collection;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Nature;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.repository.RepositoryService;
 
+import com.orchardsoft.instrumenttracker.dom.FontAwesome;
+
+import flashcard.dom.set.Set;
+import flashcard.dom.set.Sets;
 import flashcard.dom.simpleobj.SimpleObject;
 import flashcard.dom.simpleobj.SimpleObjects;
-import flashcard.dom.subject.Subject;
-import flashcard.dom.subject.Subjects;
 
 @DomainObject(nature = Nature.VIEW_MODEL, objectType = "flashcard.application.services.homepage.HomePageViewModel")
 public class HomePageViewModel {
 
-    @Inject Subjects subjects;
+    @Inject Sets sets;
+    @Inject RepositoryService repositoryService;
     //@Inject SimpleObjects simpleObjects;
 	
     public String title() {
@@ -28,8 +34,10 @@ public class HomePageViewModel {
 //        return simpleObjects.listAll();
 //    }
     
-    public List<Subject> getSubjects() {
-    	return subjects.listAll();
+    @Collection
+    @CollectionLayout(defaultView = "table", named = "Sets")
+    public List<Set> getSets() {
+    	return repositoryService.allInstances(Set.class);
     }
     
 }

@@ -1,4 +1,4 @@
-package flashcard.dom.subject;
+package flashcard.dom.set;
 
 import java.util.SortedSet;
 
@@ -8,14 +8,14 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 import com.google.common.collect.Sets;
 
-@DomainService(nature = NatureOfService.DOMAIN, repositoryFor = Subject.class)
-public class SubjectRepository {
+@DomainService(nature = NatureOfService.DOMAIN, repositoryFor = Set.class)
+public class SetRepository {
 
 //	@javax.inject.Inject
 //	private RepositoryService repositoryService;
 //
-//	public SortedSet<Subject> finalAll()
+//	public SortedSet<Set> finalAll()
 //	{
-//		return Sets.newTreeSet(repositoryService.allInstances(Subject.class));
+//		return Sets.newTreeSet(repositoryService.allInstances(Set.class));
 //	}
 }
