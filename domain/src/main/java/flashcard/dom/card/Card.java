@@ -85,7 +85,7 @@ public class Card implements Comparable<Card>{
 		this.definition = definition;
 	}
 	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "true")
-	@Property(hidden = Where.ALL_TABLES)
+	@Property(hidden = Where.ALL_TABLES, editing = Editing.ENABLED)
 	@PropertyLayout(named = "Sentences", multiLine = 10)
 	public String getSentences() {
 		return sentences;
