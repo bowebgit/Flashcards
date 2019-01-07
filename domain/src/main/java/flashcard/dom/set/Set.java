@@ -18,6 +18,8 @@ import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -48,6 +50,11 @@ public class Set implements Comparable<Set> {
 		this.name = name;
 	}
 	
+	public Set(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
+	
 	@Title
 	@Column(sqlType = "VARCHAR", length = 40, allowsNull = "false")
 	@Property(hidden = Where.NOWHERE)
@@ -74,7 +81,7 @@ public class Set implements Comparable<Set> {
 
 	@Column(sqlType = "VARCHAR", length = 4000, allowsNull = "true")
 	@Property(hidden = Where.NOWHERE)
-	@PropertyLayout(named = "Description")
+	@PropertyLayout(named = "Description", multiLine = 3)
 	@MemberOrder(sequence="2")
 	public String getDescription() {
 		return description;
@@ -84,17 +91,6 @@ public class Set implements Comparable<Set> {
 		this.description = description;
 	}
 	
-
-	@Action
-	public Set addCard(@ParameterLayout(named = "Card") String name) {
-		Card card = repositoryService.instantiate(Card.class);
-		card.setName(name);
-		card.setSet(this);
-		repositoryService.persist(card);
-		return this;
-	}
-	
-	
 	@Action 
 	public Set addSet(@ParameterLayout(named = "Set Name") String name) {
 		Set set = repositoryService.instantiate(Set.class);
@@ -102,10 +98,26 @@ public class Set implements Comparable<Set> {
 		repositoryService.persist(set);
 		return set;
 	}
-	
+
+	@Action
+	public Set addCard(
+			@Parameter(maxLength=40) @ParameterLayout(named = "Card") String name,
+			@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
+			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Definition", multiLine = 5) String definition 
+			) {
+		Card newCard = new Card(name, function, definition);
+		newCard.setSet(this);
+		repositoryService.persistAndFlush(newCard);
+		return this;
+	}
+
 	
 	@Action(semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE)
 	public void deleteSet() {
+		SortedSet<Card> cardsToDelete = this.getCards();
+		for(Card card : cardsToDelete) {
+			repositoryService.remove(card);
+		}
 		repositoryService.removeAndFlush(this);
 	}
 

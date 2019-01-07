@@ -32,6 +32,13 @@ public class Card implements Comparable<Card>{
 	private String definition;
 	private String sentences;
 	
+	public Card(String name, String function, String definition) {
+		this.name = name;
+		this.function = function;
+		this.definition = definition;
+	}
+	
+	
 	
 	@Title
 	@Column(sqlType = "VARCHAR", length = 40, allowsNull = "false")
@@ -69,7 +76,7 @@ public class Card implements Comparable<Card>{
 	
 	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "true")
 	@Property(hidden = Where.NOWHERE)
-	@PropertyLayout(named = "Definition")
+	@PropertyLayout(named = "Definition", multiLine = 3)
 	public String getDefinition() {
 		return definition;
 	}
@@ -79,7 +86,7 @@ public class Card implements Comparable<Card>{
 	}
 	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "true")
 	@Property(hidden = Where.ALL_TABLES)
-	@PropertyLayout(named = "Sentences")
+	@PropertyLayout(named = "Sentences", multiLine = 10)
 	public String getSentences() {
 		return sentences;
 	}
