@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Version;
@@ -28,6 +29,9 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import flashcard.dom.Breadcrumb;
 import flashcard.dom.card.Card;
 import lombok.RequiredArgsConstructor;
 
@@ -37,15 +41,14 @@ import lombok.RequiredArgsConstructor;
 @DomainObject(objectType = "simple.Set")
 @DomainObjectLayout()
 @RequiredArgsConstructor
-public class Set implements Comparable<Set> {
+public class Set extends Breadcrumb implements Comparable<Set> {
 
 	@Inject RepositoryService repositoryService;
 	
 	private String name;
 	private String description;
 	private SortedSet<Card> cards = new TreeSet<Card>();
-	
-	
+
 	public Set(String name) {
 		this.name = name;
 	}
@@ -121,9 +124,14 @@ public class Set implements Comparable<Set> {
 		repositoryService.removeAndFlush(this);
 	}
 
-	
-	
-	
+	@NotPersistent
+	@Property(hidden = Where.ALL_TABLES)
+	@JsonIgnore
+	//@Override
+	public Object getLevelN() {
+		return this;
+	}
+
 	@Override
 	public int compareTo(Set otherSet) {
 		return this.getName().compareTo(otherSet.getName());

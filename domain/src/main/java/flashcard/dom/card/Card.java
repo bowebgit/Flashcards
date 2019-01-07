@@ -3,6 +3,7 @@ package flashcard.dom.card;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
@@ -15,6 +16,9 @@ import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import flashcard.dom.Breadcrumb;
 import flashcard.dom.set.Set;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @DomainObject(objectType = "simple.Card")
 @DomainObjectLayout()
 @RequiredArgsConstructor
-public class Card implements Comparable<Card>{
+public class Card extends Breadcrumb implements Comparable<Card>{
 
 	private Set set;
 	private String name;
@@ -99,6 +103,21 @@ public class Card implements Comparable<Card>{
 	@Override
 	public int compareTo(Card otherCard) {
 		return this.getName().compareTo(otherCard.getName());
+	}
+
+	@NotPersistent
+	@Property(hidden = Where.ALL_TABLES)
+	@JsonIgnore
+	public Object getLevel1() {
+		return getSet();
+	}
+	
+	@NotPersistent
+	@Property(hidden = Where.ALL_TABLES)
+	@JsonIgnore
+	//@Override
+	public Object getLevelN() {
+		return this;
 	}
 
 }
