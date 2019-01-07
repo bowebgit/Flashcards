@@ -11,8 +11,11 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.homepage.HomePageProviderService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import flashcard.dom.simpleobj.SimpleObject;
@@ -22,6 +25,7 @@ import flashcard.dom.simpleobj.SimpleObject;
 public class Sets {
 	
 	@Inject RepositoryService repositoryService;
+	@Inject HomePageProviderService homePageService;
 	
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
@@ -34,8 +38,13 @@ public class Sets {
     @Action
     @ActionLayout(named = "New Set")
     @MemberOrder(sequence="2")
-    public Set create(@ParameterLayout(named = "Name") final String name) {
-    	return repositoryService.persist(new Set(name));
+    public Object create(
+    		@Parameter(maxLength = 40) @ParameterLayout(named = "Name") String name,
+    		@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Description", multiLine = 3) String description
+    		) {
+    	
+    	repositoryService.persist(new Set(name, description));
+    	return homePageService.homePage();
     }
     
 

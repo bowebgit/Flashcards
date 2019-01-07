@@ -71,17 +71,6 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 		this.name = setName;
 	}
 
-	@Persistent(mappedBy = "set", dependentElement = "false")
-	@Collection
-	@CollectionLayout(defaultView = "table", hidden=Where.ALL_TABLES, named = "Cards", paged = 30)
-	public SortedSet<Card> getCards() {
-		return cards;
-	}
-
-	public void setCards(SortedSet<Card> cards) {
-		this.cards = cards;
-	}
-
 	@Column(sqlType = "VARCHAR", length = 4000, allowsNull = "true")
 	@Property(hidden = Where.NOWHERE)
 	@PropertyLayout(named = "Description", multiLine = 3)
@@ -94,26 +83,45 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 		this.description = description;
 	}
 	
+	@Persistent(mappedBy = "set", dependentElement = "false")
+	@Collection
+	@CollectionLayout(defaultView = "table", hidden=Where.ALL_TABLES, named = "Cards", paged = 30)
+	public SortedSet<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(SortedSet<Card> cards) {
+		this.cards = cards;
+	}
+	
 	@Action 
-	public Set addSet(@ParameterLayout(named = "Set Name") String name) {
+	public Set addSet(
+			@Parameter(maxLength=40) @ParameterLayout(named = "Set Name") String name,
+			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Description", multiLine = 3) String description
+			) {
 		Set set = repositoryService.instantiate(Set.class);
 		set.setName(name);
-		repositoryService.persist(set);
-		return set;
+		return repositoryService.persistAndFlush(set);
+		
 	}
-
+	
 	@Action
-	public Set addCard(
-			@Parameter(maxLength=40) @ParameterLayout(named = "Card") String name,
-			@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
-			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Definition", multiLine = 5) String definition 
+	public Set editSet(
+			@Parameter(maxLength=40) @ParameterLayout(named = "Set Name") String name,
+			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Description", multiLine = 3) String description
 			) {
-		Card newCard = new Card(name, function, definition);
-		newCard.setSet(this);
-		repositoryService.persistAndFlush(newCard);
-		return this;
+		this.setName(name);
+		this.setDescription(description);
+		return repositoryService.persist(this);
 	}
-
+	
+	public String default0EditSet() {
+		return this.name;
+		}
+	
+	public String default1EditSet() {
+		return this.description;
+		}
 	
 	@Action(semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE)
 	public void deleteSet() {
@@ -123,7 +131,29 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 		}
 		repositoryService.removeAndFlush(this);
 	}
+	
+	@Action
+	public Set addCard(
+			@Parameter(maxLength=400) @ParameterLayout(named = "Card") String name,
+			@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
+			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Definition", multiLine = 5) String definition 
+			) {
+		Card newCard = new Card(name, function, definition);
+		newCard.setSet(this);
+		repositoryService.persistAndFlush(newCard);
+		return this;
+	}
 
+	@Action
+	public Set deleteCard(Card card) {
+		repositoryService.remove(card);
+		return this;
+	}
+	
+	public SortedSet<Card> choices0DeleteCard(){
+		return this.getCards();
+	}
+	
 	@NotPersistent
 	@Property(hidden = Where.ALL_TABLES)
 	@JsonIgnore

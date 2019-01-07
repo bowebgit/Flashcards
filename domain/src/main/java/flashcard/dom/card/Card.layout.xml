@@ -2,14 +2,14 @@
 
 <bs3:grid xsi:schemaLocation="http://isis.apache.org/applib/layout/component http://isis.apache.org/applib/layout/component/component.xsd http://isis.apache.org/applib/layout/grid/bootstrap3 http://isis.apache.org/applib/layout/grid/bootstrap3/bootstrap3.xsd" xmlns:c="http://isis.apache.org/applib/layout/component" xmlns:bs3="http://isis.apache.org/applib/layout/grid/bootstrap3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	
-	<bs3:row>
-        <bs3:col span="12" cssClass="flashcard-breadcrumb">
-			<c:fieldSet >
-				<c:property id="level0"/>
-				<c:property id="level1"/>
-			</c:fieldSet>
-		</bs3:col>
-	</bs3:row>
+<!-- 	<bs3:row> -->
+<!--         <bs3:col span="12" cssClass="flashcard-breadcrumb"> -->
+<!-- 			<c:fieldSet > -->
+<!-- 				<c:property id="level0"/> -->
+<!-- 				<c:property id="level1"/> -->
+<!-- 			</c:fieldSet> -->
+<!-- 		</bs3:col> -->
+<!-- 	</bs3:row> -->
     <bs3:row>
         <bs3:col span="12" cssClass="col-md-offset-1">
             <c:domainObject bookmarking="AS_ROOT" />
@@ -18,13 +18,15 @@
     <bs3:row>
         <bs3:col span="4" cssClass="col-md-offset-1">
             <c:fieldSet name="Card">
+            	<c:action id="editCard" position="PANEL"/>
+            	<c:action id="deleteCard" position="PANEL"/>
                 <c:property id="name" namedEscaped="true"/>
                 <c:property id="function" />
                 <c:property id="definition" />
             </c:fieldSet>
         </bs3:col>
         <bs3:col span="7">
-        	<c:fieldSet name = "Sentences">
+        	<c:fieldSet name = "Type to edit...">
 				<c:property id="sentences"/>
         	</c:fieldSet>
 		</bs3:col>
