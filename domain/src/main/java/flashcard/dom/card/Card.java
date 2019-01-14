@@ -6,6 +6,8 @@ import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Queries;
+import javax.jdo.annotations.Query;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -32,6 +34,11 @@ import lombok.RequiredArgsConstructor;
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
 @DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="id")
 @Version(strategy= VersionStrategy.DATE_TIME, column="version")
+@Queries({
+	@Query(name="findCardsByName", 
+			language="JDOQL", 
+			value = "SELECT FROM flashcard.dom.card.Card WHERE name.indexOf(:name) >= 0")
+})
 @DomainObject(objectType = "simple.Card")
 @DomainObjectLayout()
 @RequiredArgsConstructor

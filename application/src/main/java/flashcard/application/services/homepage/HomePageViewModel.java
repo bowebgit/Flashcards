@@ -49,7 +49,11 @@ public class HomePageViewModel {
     		@Parameter(maxLength=40) @ParameterLayout(named = "Set Name") String name,
     		@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Description", multiLine = 2) String description
     		) {
-    	repositoryService.persistAndFlush(new Set(name, description));
+    	
+    	Set set = repositoryService.instantiate(Set.class);
+    	set.setName(name);
+    	set.setDescription(description);
+    	repositoryService.persistAndFlush(set);
     	return this;
     }
     

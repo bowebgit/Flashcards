@@ -21,6 +21,7 @@
             	<c:action id="deleteSet" position="PANEL"/>
                 <c:property id="name" namedEscaped="true"/>
                 <c:property id="description" namedEscaped="true"/>
+                <c:property id="numberOfCards" />
             </c:fieldSet>
         </bs3:col>
         <bs3:col span="7">

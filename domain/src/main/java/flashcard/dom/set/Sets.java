@@ -18,8 +18,6 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.homepage.HomePageProviderService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import flashcard.dom.simpleobj.SimpleObject;
-
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY, objectType = "simple.SetsMenu", repositoryFor = Set.class)
 @DomainObjectLayout
 public class Sets {

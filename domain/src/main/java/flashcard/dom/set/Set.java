@@ -48,7 +48,7 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 	private String name;
 	private String description;
 	private SortedSet<Card> cards = new TreeSet<Card>();
-
+	
 	public Set(String name) {
 		this.name = name;
 	}
@@ -94,6 +94,15 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 		this.cards = cards;
 	}
 	
+	@NotPersistent
+	@Property(hidden = Where.NOWHERE)
+	@PropertyLayout(named = "Size")
+	@MemberOrder(sequence = "3")
+	public String getNumberOfCards() {
+		return String.valueOf(getCards().size());
+	}
+
+	
 	@Action 
 	public Set addSet(
 			@Parameter(maxLength=40) @ParameterLayout(named = "Set Name") String name,
@@ -101,6 +110,7 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 			) {
 		Set set = repositoryService.instantiate(Set.class);
 		set.setName(name);
+		set.setDescription(description);
 		return repositoryService.persistAndFlush(set);
 		
 	}
@@ -157,7 +167,6 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 	@NotPersistent
 	@Property(hidden = Where.ALL_TABLES)
 	@JsonIgnore
-	//@Override
 	public Object getLevelN() {
 		return this;
 	}
