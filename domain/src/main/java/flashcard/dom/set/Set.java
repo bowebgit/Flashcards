@@ -1,5 +1,6 @@
 package flashcard.dom.set;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -154,6 +155,23 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 		return this;
 	}
 
+	// Move Card from this Set to another Set, return this Set. Can multi select?
+	@Action
+	public Set moveCard(
+			@ParameterLayout(named = "Card") Card card,
+			@ParameterLayout(named = "Set") Set set) {
+		card.setSet(set);
+		return this;
+	}
+	
+	public SortedSet<Card> choices0MoveCard() {
+		return this.getCards();
+	}
+	
+	public List<Set> choices1MoveCard(){
+		return repositoryService.allInstances(Set.class);
+	}
+	
 	@Action
 	public Set deleteCard(Card card) {
 		repositoryService.remove(card);

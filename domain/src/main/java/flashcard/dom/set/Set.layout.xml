@@ -27,6 +27,7 @@
         <bs3:col span="7">
         	<c:collection id="cards">
         		<c:action id="addCard" position="PANEL"/>
+        		<c:action id="moveCard" position="PANEL"/>
         		<c:action id="deleteCard" position="PANEL"/>
         	</c:collection>
         </bs3:col>

@@ -1,5 +1,7 @@
 package flashcard.dom.card;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
@@ -139,6 +141,17 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 	
 	public String default2EditCard() {
 		return this.getDefinition();
+	}
+	
+	@Action
+	public Set moveCard(@ParameterLayout(named = "Set") Set set) {
+		Set currentParent = this.getSet();
+		this.setSet(set);
+		return currentParent;
+	}
+	
+	public List<Set> choices0MoveCard(){
+		return repositoryService.allInstances(Set.class);
 	}
 	
 	@Action 
