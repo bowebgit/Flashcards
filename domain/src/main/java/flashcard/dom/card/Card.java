@@ -1,5 +1,8 @@
 package flashcard.dom.card;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -49,18 +52,32 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 	@Inject RepositoryService repositoryService;
 	
 	private Set set;
+	private Rank rank;
 	private String name;
 	private String function;
 	private String definition;
 	private String sentences;
+	public static java.util.Set<Card> cards = new LinkedHashSet<Card>();
+	
 	
 	public Card(String name, String function, String definition) {
 		this.name = name;
 		this.function = function;
 		this.definition = definition;
 	}
-	
 
+	@Column
+	@Property(hidden = Where.NOWHERE)
+	@PropertyLayout(named = "Rank")
+	@MemberOrder(sequence = "2")
+	public Rank getRank() {
+		return rank;
+	}
+	
+	public void setRank(Rank rank) {
+		this.rank = rank;
+	}
+	
 	@Title
 	@Column(sqlType = "VARCHAR", length = 400, allowsNull = "false")
 	@Property(hidden = Where.NOWHERE)
@@ -122,10 +139,12 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 	@Action
 	public Card editCard(
 			@Parameter(maxLength = 400) @ParameterLayout(named = "Card") String name,
+			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Rank") Rank rank, 
 			@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
 			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Definition", multiLine = 5) String definition
 			) {
 		this.setName(name);
+		this.setRank(rank);
 		this.setFunction(function);
 		this.setDefinition(definition);
 		return repositoryService.persist(this);
@@ -135,11 +154,19 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 		return this.getName();
 	}
 	
-	public String default1EditCard() {
-		return this.getFunction();
+	public List<Rank> choices1EditCard(){
+		return Arrays.asList(Rank.values());
+	}
+	
+	public Rank default1EditCard() {
+		return this.rank;
 	}
 	
 	public String default2EditCard() {
+		return this.getFunction();
+	}
+	
+	public String default3EditCard() {
 		return this.getDefinition();
 	}
 	
@@ -160,6 +187,23 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 		repositoryService.remove(this);
 		return parentSet;
 	}
+	
+	@Action
+	public Card randomCard() {
+		java.util.Set<Card> all =  this.getSet().getCards();
+		int item = new java.util.Random().nextInt(all.size());
+		int i = 0;
+		for(Card c : all) {
+			if (i == item) {
+				return c;
+			} else {
+				i++;
+			}
+		}
+		return null;
+		
+	}
+	
 	
 	@Override
 	public int compareTo(Card otherCard) {

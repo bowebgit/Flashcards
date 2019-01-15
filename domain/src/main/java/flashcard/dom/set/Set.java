@@ -1,5 +1,6 @@
 package flashcard.dom.set;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -34,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import flashcard.dom.Breadcrumb;
 import flashcard.dom.card.Card;
+import flashcard.dom.card.Rank;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
@@ -146,15 +148,21 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 	@Action
 	public Set addCard(
 			@Parameter(maxLength=400) @ParameterLayout(named = "Card") String name,
+			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Rank") Rank rank,
 			@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
 			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Definition", multiLine = 5) String definition 
 			) {
 		Card newCard = new Card(name, function, definition);
 		newCard.setSet(this);
+		newCard.setRank(rank);
 		repositoryService.persistAndFlush(newCard);
 		return this;
 	}
 
+	public List<Rank> choices1AddCard() {
+		return Arrays.asList(Rank.values());
+	}
+	
 	// Move Card from this Set to another Set, return this Set. Can multi select?
 	@Action
 	public Set moveCard(
