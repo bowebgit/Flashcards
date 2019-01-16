@@ -29,9 +29,14 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
+    	<bs3:col span="4">
+	    	<c:action id="randomCard"  cssClass="col-md-offset-1"/>
+    	</bs3:col>
+    </bs3:row>
+    <bs3:row>
         <bs3:col span="10" cssClass="col-md-offset-1">
-        	<c:fieldSet name = "Type to edit...">
-        		<c:action id="randomCard" position="PANEL"/>
+        	<c:fieldSet> <!-- name = "Type to edit..." -->
+<!--         		<c:action id="randomCard" position="PANEL"/> -->
 				<c:property id="sentences"/>
         	</c:fieldSet>
 		</bs3:col>
