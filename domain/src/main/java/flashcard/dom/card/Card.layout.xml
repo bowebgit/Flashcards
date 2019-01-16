@@ -10,27 +10,29 @@
 <!-- 			</c:fieldSet> -->
 <!-- 		</bs3:col> -->
 <!-- 	</bs3:row> -->
-    <bs3:row>
+    <bs3:row>   
         <bs3:col span="10" cssClass="col-md-offset-1">
             <c:domainObject bookmarking="AS_ROOT" />
         </bs3:col>
     </bs3:row>
-    <bs3:row>  
-        <bs3:col span="4">
+   	<bs3:row>
+        <bs3:col span="6" cssClass="col-md-offset-1">
             <c:fieldSet name="Card">
-            	<c:action id="editCard" position="PANEL"/>
-            	<c:action id="moveCard" position="PANEL"/>
-            	<c:action id="deleteCard" position="PANEL"/>
+	        	<c:action id="editCard"  position="PANEL" />
+	         	<c:action id="deleteCard"  position="PANEL" />
+				<c:action id="moveCard"  position="PANEL"/>
                 <c:property id="name" namedEscaped="true"/>
                 <c:property id="rank" namedEscaped="true"/>
-                <c:property id="function" />
-                <c:property id="definition" />
+                <c:property id="function"/>
+        		<c:property id="definition"/>
             </c:fieldSet>
         </bs3:col>
-        <bs3:col span="8">
+    </bs3:row>
+    <bs3:row>
+        <bs3:col span="10" cssClass="col-md-offset-1">
         	<c:fieldSet name = "Type to edit...">
         		<c:action id="randomCard" position="PANEL"/>
-				<c:property id="sentences" cssClass="sentenceBox"/>
+				<c:property id="sentences"/>
         	</c:fieldSet>
 		</bs3:col>
    	</bs3:row>

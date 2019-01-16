@@ -26,6 +26,7 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -40,8 +41,7 @@ import lombok.RequiredArgsConstructor;
 @DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="id")
 @Version(strategy= VersionStrategy.DATE_TIME, column="version")
 @Queries({
-	@Query(name="findCardsByName", 
-			language="JDOQL", 
+	@Query(name="findCardsByName", language="JDOQL", 
 			value = "SELECT FROM flashcard.dom.card.Card WHERE name.indexOf(:name) >= 0")
 })
 @DomainObject(objectType = "simple.Card")
@@ -54,15 +54,15 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 	private Set set;
 	private Rank rank;
 	private String name;
-	private String function;
+	//private String function;
 	private String definition;
 	private String sentences;
 	public static java.util.Set<Card> cards = new LinkedHashSet<Card>();
 	
 	
-	public Card(String name, String function, String definition) {
+	public Card(String name, String definition) {
 		this.name = name;
-		this.function = function;
+		//this.function = function;
 		this.definition = definition;
 	}
 
@@ -81,7 +81,7 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 	@Title
 	@Column(sqlType = "VARCHAR", length = 400, allowsNull = "false")
 	@Property(hidden = Where.NOWHERE)
-	@PropertyLayout(named = "Card")
+	@PropertyLayout(named = "Card", cssClass = "card-name-field")
 	@MemberOrder(sequence = "1")
 	public String getName() {
 		return name;
@@ -102,21 +102,21 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 		this.set = set;
 	}
 	
-	@Column(sqlType = "VARCHAR", length = 40, allowsNull = "true")
-	@Property(hidden = Where.NOWHERE)
-	@PropertyLayout(named = "Function")
-	@MemberOrder(sequence = "2")
-	public String getFunction() {
-		return function;
-	}
-
-	public void setFunction(String function) {
-		this.function = function;
-	}
+//	@Column(sqlType = "VARCHAR", length = 40, allowsNull = "true")
+//	@Property(hidden = Where.NOWHERE)
+//	@PropertyLayout(named = "Function")
+//	@MemberOrder(sequence = "2")
+//	public String getFunction() {
+//		return function;
+//	}
+//
+//	public void setFunction(String function) {
+//		this.function = function;
+//	}
 	
 	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "true")
 	@Property(hidden = Where.NOWHERE)
-	@PropertyLayout(named = "Definition", multiLine = 3)
+	@PropertyLayout(named = "Definition", multiLine = 4)
 	@MemberOrder(sequence = "3")
 	public String getDefinition() {
 		return definition;
@@ -125,9 +125,10 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 	public void setDefinition(String definition) {
 		this.definition = definition;
 	}
+	
 	@Column(sqlType = "VARCHAR", length = 8000, allowsNull = "true")
 	@Property(hidden = Where.ALL_TABLES, editing = Editing.ENABLED)
-	@PropertyLayout(named = "Sentences", multiLine = 10)
+	@PropertyLayout(named = "Sentences", multiLine = 8)
 	public String getSentences() {
 		return sentences;
 	}
@@ -140,12 +141,11 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 	public Card editCard(
 			@Parameter(maxLength = 400) @ParameterLayout(named = "Card") String name,
 			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Rank") Rank rank, 
-			@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
+			//@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
 			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Definition", multiLine = 5) String definition
 			) {
 		this.setName(name);
 		this.setRank(rank);
-		this.setFunction(function);
 		this.setDefinition(definition);
 		return repositoryService.persist(this);
 	}
@@ -162,11 +162,8 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 		return this.rank;
 	}
 	
-	public String default2EditCard() {
-		return this.getFunction();
-	}
 	
-	public String default3EditCard() {
+	public String default2EditCard() {
 		return this.getDefinition();
 	}
 	
@@ -181,7 +178,7 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 		return repositoryService.allInstances(Set.class);
 	}
 	
-	@Action 
+	@Action(semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE)
 	public Set deleteCard() {
 		Set parentSet = this.getSet();
 		repositoryService.remove(this);

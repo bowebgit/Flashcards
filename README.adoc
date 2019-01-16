@@ -1,24 +1,3 @@
 = Flashcards
 
 This application is built with link:http://isis.apache.org[Apache Isis] 
-
-== Quick start
-
-Build using:
-
-[source,bash]
-----
-mvn clean install
-----
-
-Run using:
-
-[source,bash]
-----
-mvn -pl webapp jetty:run
-----
-
-Login using: 
-
-* username: `sven`
-* password: `pass`

@@ -15,7 +15,7 @@
         </bs3:col>
     </bs3:row>
     <bs3:row> 
-        <bs3:col span="4" >
+        <bs3:col span="4" cssClass = "col-md-offset-1" >
             <c:fieldSet name="Set">
             	<c:action id="editSet" position="PANEL"/>
             	<c:action id="deleteSet" position="PANEL"/>
@@ -24,11 +24,11 @@
                 <c:property id="numberOfCards" />
             </c:fieldSet>
         </bs3:col>
-        <bs3:col span="8">
+        <bs3:col span="7">
         	<c:collection id="cards">
         		<c:action id="addCard" position="PANEL"/>
-        		<c:action id="moveCard" position="PANEL"/>
         		<c:action id="deleteCard" position="PANEL"/>
+        		<c:action id="moveCard" position="PANEL"/>
         	</c:collection>
         </bs3:col>
    	</bs3:row>

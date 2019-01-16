@@ -149,10 +149,10 @@ public class Set extends Breadcrumb implements Comparable<Set> {
 	public Set addCard(
 			@Parameter(maxLength=400) @ParameterLayout(named = "Card") String name,
 			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Rank") Rank rank,
-			@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
+			//@Parameter(optionality = Optionality.OPTIONAL, maxLength=40) @ParameterLayout(named = "Function") String function,
 			@Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named = "Definition", multiLine = 5) String definition 
 			) {
-		Card newCard = new Card(name, function, definition);
+		Card newCard = new Card(name, definition);
 		newCard.setSet(this);
 		newCard.setRank(rank);
 		repositoryService.persistAndFlush(newCard);
