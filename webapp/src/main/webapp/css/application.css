@@ -1,4 +1,6 @@
-
+.linksSelectorPanel  .viewLinks{
+	display: none;
+}
 .panel-title{
 	font-weight:bold;
 	font-size:1.07em;
