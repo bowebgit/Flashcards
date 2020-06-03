@@ -66,7 +66,7 @@ public class Card extends Breadcrumb implements Comparable<Card>{
 		this.definition = definition;
 	}
 
-	@Column
+	@Column(name = "twiddle")
 	@Property(hidden = Where.NOWHERE)
 	@PropertyLayout(named = "Rank")
 	@MemberOrder(sequence = "2")
